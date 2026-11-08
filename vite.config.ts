@@ -31,12 +31,6 @@ export default defineConfig({
   },
 
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://16.178.137.42',
-        changeOrigin: true,
-      },
-    },
     watch: {
       ignored: [
         '**/.git/**',
