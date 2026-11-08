@@ -4,6 +4,7 @@ import { Toaster } from "./components/ui/sonner";
 import { canAccessPage, getDefaultPageForRole, NAV_ITEMS, PageId, Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
 import { LoginScreen } from "./components/LoginScreen";
+import { LandingPage } from "./components/LandingPage";
 import { Dashboard } from "./pages/Dashboard";
 import { UserManagement } from "./pages/UserManagement";
 import { CreatorManagement } from "./pages/CreatorManagement";
@@ -30,6 +31,7 @@ const STORAGE_KEY = "play-admin-session";
 export default function App() {
   const [page, setPage] = useState<PageId>("dashboard");
   const [session, setSession] = useState<AdminSession | null>(() => getStoredSession());
+  const [showLogin, setShowLogin] = useState(false);
   const title = page === "adminProfile" ? "Admin Profile" : page === "adminNotifications" ? "Admin Notifications" : NAV_ITEMS.find((n) => n.id === page)?.label ?? "Dashboard";
   const role = session?.user.role;
 
@@ -135,7 +137,7 @@ export default function App() {
   if (!session) {
     return (
       <>
-        <LoginScreen onLogin={handleLogin} />
+        {showLogin ? <LoginScreen onLogin={handleLogin} /> : <LandingPage onLogin={() => setShowLogin(true)} />}
         <Toaster theme="dark" position="top-right" />
       </>
     );
